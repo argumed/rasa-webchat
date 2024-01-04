@@ -3,14 +3,12 @@ import { Provider } from 'react-redux';
 import { render } from '@testing-library/react';
 import { fromJS } from 'immutable';
 
-import LocalStorageMock from '../../../../mocks/localStorageMock';
 import Message from '../components/Conversation/components/Messages/components/Message';
 import { initStore } from '../../../store/store';
 
 describe('Message custom Css', () => {
-  const localStorage = new LocalStorageMock();
   const stubSocket = jest.fn();
-  const store = initStore('dummy', stubSocket, localStorage);
+  const store = initStore('dummy', stubSocket);
 
   const messages = [
     // a response with customcss of type custom

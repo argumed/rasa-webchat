@@ -4,11 +4,9 @@ import { Provider } from 'react-redux';
 
 import Sender from '../components/Conversation/components/Sender';
 import { initStore } from '../../../store/store';
-import LocalStorageMock from '../../../../mocks/localStorageMock';
 
-const localStorage = new LocalStorageMock();
 const stubSocket = jest.fn();
-const store = initStore('dummy', stubSocket, localStorage);
+const store = initStore('dummy', stubSocket);
 
 describe('Metadata store affect input behavior', () => {
   const renderSenderComponent = (userInputState = null) => {

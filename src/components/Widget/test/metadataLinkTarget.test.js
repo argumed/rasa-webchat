@@ -2,13 +2,11 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { render, screen } from '@testing-library/react';
 
-import LocalStorageMock from '../../../../mocks/localStorageMock';
 import Buttons from '../components/Conversation/components/Messages/components/Buttons';
 import { initStore } from '../../../store/store';
 
-const localStorage = new LocalStorageMock();
 const stubSocket = jest.fn();
-const store = initStore('dummy', stubSocket, localStorage);
+const store = initStore('dummy', stubSocket);
 
 describe('link target', () => {
   beforeEach(() => {

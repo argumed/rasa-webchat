@@ -2,13 +2,11 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { render, screen } from '@testing-library/react';
 
-import LocalStorageMock from '../../../../mocks/localStorageMock';
 import Launcher from '../components/Launcher';
 import { initStore } from '../../../store/store';
 
-const localStorage = new LocalStorageMock();
 const stubSocket = jest.fn();
-const store = initStore('dummy', stubSocket, localStorage);
+const store = initStore('dummy', stubSocket);
 
 describe('message target store affect app behavior', () => {
   const renderLauncherComponent = () => render(

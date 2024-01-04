@@ -1,12 +1,11 @@
 import React from 'react';
 import { render, fireEvent, screen } from '@testing-library/react';
 
-import assetMock from '../../../../mocks/fileMock';
 import Widget from '../index';
 import WidgetLayout from '../layout';
 
 describe('<Widget />', () => {
-  const profile = assetMock;
+  const profile = jest.fn();;
   const handleUserMessage = jest.fn();
   const dispatch = jest.fn();
 

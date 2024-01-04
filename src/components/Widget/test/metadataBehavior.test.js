@@ -2,19 +2,16 @@ import React from 'react';
 import { render, fireEvent, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 
-import assetMock from '../../../../mocks/fileMock';
 import Widget from '../index';
 import { initStore } from '../../../store/store';
-import LocalStorageMock from '../../../../mocks/localStorageMock';
 
-const localStorage = new LocalStorageMock();
 let sentToSocket = [];
 const mockSocket = {
   emit: jest.fn((action, message) => sentToSocket.push({ action, message })),
   on: () => {},
   sessionConfirmed: true
 };
-const store = initStore('dummy', mockSocket, localStorage);
+const store = initStore('dummy', mockSocket);
 
 describe('Metadata store affect app behavior', () => {
   // ... (other setup code)

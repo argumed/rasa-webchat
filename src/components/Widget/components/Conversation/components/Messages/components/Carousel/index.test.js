@@ -7,7 +7,6 @@ import { List } from 'immutable';
 
 import Messages from '../../index';
 import { initStore } from '../../../../../../../../store/store';
-import LocalStorageMock from '../../../../../../../../../mocks/localStorageMock';
 
 describe('</Carousel />', () => {
   const carousel = createCarousel(
@@ -55,8 +54,7 @@ describe('</Carousel />', () => {
   );
 
   const responseMessage = List([carousel]);
-  const localStorage = new LocalStorageMock();
-  const store = initStore('dummy', 'dummy', localStorage);
+  const store = initStore('dummy', 'dummy');
 
   store.dispatch({
     type: 'CONNECT'
