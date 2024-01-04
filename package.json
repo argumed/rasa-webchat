@@ -1,10 +1,10 @@
 {
   "name": "rasa-webchat",
-  "version": "1.0.2",
+  "version": "2.0.0",
   "description": "Chat web widget for React apps and Rasa Core chatbots for Argumed",
   "module": "module/index.js",
   "main": "lib/index.js",
-  "repository": "git@https://github.com/botfront/rasa-webchat.git",
+  "repository": "git@https://github.com/argumed/rasa-webchat.git",
   "author": "",
   "license": "Apache-2.0",
   "scripts": {
@@ -88,14 +88,6 @@
   "peerDependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
-  },
-  "jest": {
-    "verbose": true,
-    "moduleNameMapper": {
-      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/mocks/fileMock.js",
-      "\\.(css|scss)$": "<rootDir>/mocks/styleMock.js"
-    },
-    "setupTestFrameworkScriptFile": "<rootDir>/test-setup.js"
   },
   "husky": {
     "hooks": {
