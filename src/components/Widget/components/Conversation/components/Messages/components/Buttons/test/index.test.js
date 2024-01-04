@@ -1,11 +1,10 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
-import { render } from 'enzyme';
+import { render, screen } from '@testing-library/react';
 
 import { createButtons } from 'helper';
 import Buttons from '../index';
-
 
 describe('<Buttons />', () => {
   const buttons = createButtons({
@@ -34,20 +33,20 @@ describe('<Buttons />', () => {
     behavior: new Map([['disabledInput', false]]),
     metadata: new Map() });
 
-  const buttonsComponent = render(
-    <Provider store={store}>
-      <Buttons
-        params={null}
-        id={1}
-        message={buttons}
-        isLast
-      />
-    </Provider>
-  );
-
   it('should render a quick reply with a link to google', () => {
-    expect(buttonsComponent.find('a.rw-reply')).toHaveLength(1);
-    expect(buttonsComponent.find('a.rw-reply').html()).toEqual('google');
-    expect(buttonsComponent.find('a.rw-reply').prop('href')).toEqual('http://www.google.ca');
+    render(
+      <Provider store={store}>
+        <Buttons
+          params={null}
+          id={1}
+          message={buttons}
+          isLast
+        />
+      </Provider>
+    );
+
+    const linkElement = screen.getByText('google');
+    expect(linkElement).toBeInTheDocument();
+    expect(linkElement).toHaveAttribute('href', 'http://www.google.ca');
   });
 });

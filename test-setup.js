@@ -1,22 +1,15 @@
-/* eslint-disable func-names */
-import Enzyme from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+// jest.setup.js
 
-Enzyme.configure({ adapter: new Adapter() });
-window.matchMedia =
-  window.matchMedia ||
-  function () {
-    return {
-      matches: false,
-      addListener() {},
-      removeListener() {}
-    };
+// Polyfill for window.matchMedia
+global.matchMedia = global.matchMedia || function () {
+  return {
+    matches: false,
+    addListener: () => {},
+    removeListener: () => {}
   };
+};
 
-window.requestAnimationFrame =
-  window.requestAnimationFrame ||
-  function (callback) {
-    setTimeout(callback, 0);
-  };
-
-Enzyme.configure({ adapter: new Adapter() });
+// Polyfill for window.requestAnimationFrame
+global.requestAnimationFrame = global.requestAnimationFrame || function (callback) {
+  setTimeout(callback, 0);
+};

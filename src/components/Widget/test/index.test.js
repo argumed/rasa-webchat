@@ -1,24 +1,15 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render, fireEvent, screen } from '@testing-library/react';
 
-import assetMock from 'tests-mocks/fileMock';
 import Widget from '../index';
 import WidgetLayout from '../layout';
 
 describe('<Widget />', () => {
-  const profile = assetMock;
+  const profile = jest.fn();;
   const handleUserMessage = jest.fn();
-  const newMessageEvent = {
-    target: {
-      message: {
-        value: 'New message'
-      }
-    },
-    preventDefault() {}
-  };
   const dispatch = jest.fn();
 
-  const widgetComponent = shallow(
+  const renderWidgetComponent = () => render(
     <Widget.WrappedComponent
       handleNewUserMessage={handleUserMessage}
       profileAvatar={profile}
@@ -33,17 +24,23 @@ describe('<Widget />', () => {
   );
 
   it('should render WidgetLayout', () => {
-    expect(widgetComponent.find(WidgetLayout)).toHaveLength(1);
+    const { getByTestId } = renderWidgetComponent();
+    expect(getByTestId('widget-layout')).toBeInTheDocument();
   });
 
   it('should prevent events default behavior', () => {
-    const spyPreventDefault = jest.spyOn(newMessageEvent, 'preventDefault');
-    widgetComponent.instance().handleMessageSubmit(newMessageEvent);
-    expect(spyPreventDefault).toHaveBeenCalled();
+    const { getByTestId } = renderWidgetComponent();
+    const messageInput = getByTestId('message-input');
+    fireEvent.change(messageInput, { target: { value: 'New message' } });
+    fireEvent.submit(getByTestId('message-form'));
+    expect(handleUserMessage).toHaveBeenCalledWith('New message');
   });
 
-  it('should clear the message input when newMessageEvent', () => {
-    widgetComponent.instance().handleMessageSubmit(newMessageEvent);
-    expect(newMessageEvent.target.message.value).toBe('');
+  it('should clear the message input when new message is submitted', () => {
+    const { getByTestId } = renderWidgetComponent();
+    const messageInput = getByTestId('message-input');
+    fireEvent.change(messageInput, { target: { value: 'New message' } });
+    fireEvent.submit(getByTestId('message-form'));
+    expect(messageInput.value).toBe('');
   });
 });
