@@ -1,7 +1,7 @@
 {
   "name": "rasa-webchat",
   "version": "1.0.2",
-  "description": "Chat web widget for React apps and Rasa Core chatbots",
+  "description": "Chat web widget for React apps and Rasa Core chatbots for Argumed",
   "module": "module/index.js",
   "main": "lib/index.js",
   "repository": "git@https://github.com/botfront/rasa-webchat.git",
