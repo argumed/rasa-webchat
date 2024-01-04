@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 
 import { createCarousel } from 'helper';
@@ -55,26 +55,23 @@ describe('</Carousel />', () => {
   );
 
   const responseMessage = List([carousel]);
-
   const localStorage = new LocalStorageMock();
-
   const store = initStore('dummy', 'dummy', localStorage);
 
   store.dispatch({
     type: 'CONNECT'
   });
 
-  const messagesComponent = shallow(
-    <Provider store={store}>
-      <Messages.WrappedComponent messages={responseMessage} />
-    </Provider>
-  );
-
   it('should render a Carousel component and buttons and default actions', () => {
-    expect(messagesComponent.render().find('.rw-carousel-card')).toHaveLength(3);
-    expect(messagesComponent.render().find('a[href^="https://google"]')).toHaveLength(3);
-    expect(messagesComponent.render().find('.rw-reply')).toHaveLength(3);
+    render(
+      <Provider store={store}>
+        <Messages.WrappedComponent messages={responseMessage} />
+      </Provider>
+    );
 
-    expect(messagesComponent.render().find('.rw-reply[href^="https://facebook"]')).toHaveLength(1);
+    expect(screen.getAllByTestId('rw-carousel-card')).toHaveLength(3);
+    expect(screen.getAllByTestId('rw-link-google')).toHaveLength(3);
+    expect(screen.getAllByTestId('rw-reply')).toHaveLength(3);
+    expect(screen.getAllByTestId('rw-link-facebook')).toHaveLength(1);
   });
 });

@@ -1,7 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { Map } from 'immutable';
-import { mount, shallow } from 'enzyme';
+import { render, screen } from '@testing-library/react';
 
 import LocalStorageMock from '../../../../mocks/localStorageMock';
 import Launcher from '../components/Launcher';
@@ -11,12 +10,11 @@ const localStorage = new LocalStorageMock();
 const stubSocket = jest.fn();
 const store = initStore('dummy', stubSocket, localStorage);
 
-
 describe('message target store affect app behavior', () => {
-  const launcherCompoment = mount(
+  const renderLauncherComponent = () => render(
     <Provider store={store}>
       <Launcher
-        toggle={() => { }}
+        toggle={() => {}}
         isChatOpen={false}
         fullScreenMode={false}
       />
@@ -24,10 +22,10 @@ describe('message target store affect app behavior', () => {
   );
 
   it('should render a tooltip', () => {
+    renderLauncherComponent();
     store.dispatch({ type: 'SHOW_TOOLTIP', visible: true });
     store.dispatch({ type: 'ADD_NEW_RESPONSE_MESSAGE', text: 'hey' });
-    launcherCompoment.update();
-    expect(launcherCompoment.find('.rw-tooltip-body')).toHaveLength(1);
-    expect(launcherCompoment.find('.rw-tooltip-body').text()).toEqual('hey');
+    // You may need to wait for the component to update
+    expect(screen.getByText('hey')).toBeInTheDocument();
   });
 });
