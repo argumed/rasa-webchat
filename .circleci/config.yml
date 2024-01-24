@@ -1,14 +1,18 @@
 version: 2
-executors:
-  debian:
-    docker:
-      - image: cimg/node:16.14.2
-        <<: *dockerhub_auth
+
+orbs:
+  base: argumed/base@0.1.0
+  node: argumed/node@0.1.0
+  release: argumed/release@0.1.1
+
+aliases:
+  - &dockerhub_auth
+    auth:
+      username: $DOCKERHUB_USER
+      password: $DOCKERHUB_ACCESS_TOKEN
 
 jobs:
-
   build_and_test:
-    <<: *defaults
     steps:
       - checkout
       - setup_remote_docker
@@ -23,7 +27,6 @@ jobs:
        
 
   deploy:
-    <<: *defaults
     docker:
       - image: node:8-alpine
     steps:
@@ -47,3 +50,10 @@ workflows:
           filters:
               branches:
                 only: master
+                
+                      
+executors:
+  debian:
+    docker:
+      - image: cimg/node:16.14.2
+        <<: *dockerhub_auth
