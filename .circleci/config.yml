@@ -11,9 +11,8 @@ jobs:
       - run:
           name: Publish to Gemfury (Dev)
           command: |
-            npm config set @argumed:registry https://npm-proxy.fury.io/argumed/
-            npm config set //npm-proxy.fury.io/argumed/:_authToken=${GEMFURY_TOKEN}
-            npm config set always-auth true
+            echo "//npm.fury.io/argumed/:_authToken=${GEMFURY_TOKEN}" > ~/.npmrc
+            echo "@argumed:registry=https://npm.fury.io/argumed/" >> ~/.npmrc
             npm publish --tag dev
 
   build-and-deploy-prod:
@@ -26,8 +25,8 @@ jobs:
       - run:
           name: Publish to Gemfury (Prod)
           command: |
-            echo "//npm-proxy.fury.io/argumed/:_authToken=${GEMFURY_TOKEN}" > ~/.npmrc
-            echo "@argumed:registry=https://npm-proxy.fury.io/argumed/" >> ~/.npmrc
+            echo "//npm.fury.io/argumed/:_authToken=${GEMFURY_TOKEN}" > ~/.npmrc
+            echo "@argumed:registry=https://npm.fury.io/argumed/" >> ~/.npmrc
             npm publish
   
 workflows:
