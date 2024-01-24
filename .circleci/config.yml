@@ -13,7 +13,7 @@ jobs:
           command: |
             echo "//npm.fury.io/argumed/:_authToken=${GEMFURY_TOKEN}" > ~/.npmrc
             echo "@argumed:registry=https://npm.fury.io/argumed/" >> ~/.npmrc
-            npm publish --tag dev --registry https://npm.fury.io/argumed/
+            npm publish --tag dev --registry https://npm.fury.io/argumed/ --scope=@argumed
 
   build-and-deploy-prod:
     docker:
@@ -27,7 +27,7 @@ jobs:
           command: |
             echo "//npm.fury.io/argumed/:_authToken=${GEMFURY_TOKEN}" > ~/.npmrc
             echo "@argumed:registry=https://npm.fury.io/argumed/" >> ~/.npmrc
-            npm publish --registry https://npm.fury.io/argumed/
+            npm publish --registry https://npm.fury.io/argumed/ --scope=@argumed
   
 workflows:
   version: 2
