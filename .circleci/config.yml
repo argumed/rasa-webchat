@@ -1,20 +1,45 @@
 version: 2.1
+
 jobs:
-  build:
+  build-and-deploy-dev:
     docker:
-      - image: circleci/node:16.6.0
+      - image: circleci/node:latest
     steps:
       - checkout
       - run: npm install
       - run: npm test
       - run:
-          name: Publish to Gemfury
+          name: Publish to Gemfury (Dev)
           command: |
-            echo "//npm-proxy.fury.io/${GEMFURY_USER}/: authToken=${GEMFURY_AUTH_TOKEN}" > .npmrc
+            echo "//npm-proxy.fury.io/argumed/: authToken=${GEMFURY_TOKEN}" > .npmrc
+            npm publish --tag dev
+
+  build-and-deploy-prod:
+    docker:
+      - image: circleci/node:latest
+    steps:
+      - checkout
+      - run: npm install
+      - run: npm test
+      - run:
+          name: Publish to Gemfury (Prod)
+          command: |
+            echo "//npm-proxy.fury.io/argumed/: authToken=${GEMFURY_TOKEN}" > .npmrc
             npm publish
+
 workflows:
   version: 2
-  build-and-publish:
+  dev:
     jobs:
-      - build:
+      - build-and-deploy-dev:
           context: gemfury-upload
+          filters:
+            branches:
+              ignore: dev
+  prod:
+    jobs:
+      - build-and-deploy-prod:
+          context: gemfury-upload
+          filters:
+            branches:
+              only: main
