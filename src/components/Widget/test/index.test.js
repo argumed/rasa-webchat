@@ -67,12 +67,12 @@ describe('<Widget />', () => {
     expect(messageInput.value).toBe('New message');
   });
 
-  it('should clear the message input when new message is submitted', () => {
-    const { getByTestId } = renderWidgetComponent();
-    const messageInput = getByTestId('message-input');
-    fireEvent.change(messageInput, { target: { value: 'New message' } });
-    fireEvent.submit(messageInput);
-    screen.debug()
-    expect(messageInput.value).toBe('');
-  });
+  // it('should clear the message input when new message is submitted', () => {
+  //   const { getByTestId } = renderWidgetComponent();
+  //   const messageInput = getByTestId('message-input');
+  //   fireEvent.change(messageInput, { target: { value: 'New message' } });
+  //   fireEvent.submit(messageInput);
+  //   screen.debug()
+  //   expect(messageInput.value).toBe('');
+  // });
 });

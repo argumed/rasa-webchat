@@ -142,7 +142,7 @@ class Messages extends Component {
     const { conversationBackgroundColor, assistBackgoundColor } = this.context;
 
     return (
-      <div id="rw-messages" style={{ backgroundColor: conversationBackgroundColor }} className="rw-messages-container">
+      <div data-testid="rw-messages" style={{ backgroundColor: conversationBackgroundColor }} className="rw-messages-container">
         { renderMessages() }
         {displayTypingIndication && (
           <div className={`rw-message rw-typing-indication ${profileAvatar && 'rw-with-avatar'}`}>
