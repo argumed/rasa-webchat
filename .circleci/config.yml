@@ -11,7 +11,7 @@ jobs:
       - run:
           name: Publish to Gemfury (Dev)
           command: |
-            npm config set @argumed:registry https://npm-proxy.fury.io/mycompany/
+            npm config set @argumed:registry https://npm-proxy.fury.io/argumed/
             npm config set //npm-proxy.fury.io/argumed/:_authToken=${GEMFURY_TOKEN}
             npm config set always-auth true
             npm publish --tag dev
