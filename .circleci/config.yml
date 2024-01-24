@@ -12,6 +12,7 @@ jobs:
           name: Publish to Gemfury (Dev)
           command: |
             echo "//npm-proxy.fury.io/argumed/:_authToken=${GEMFURY_TOKEN}" > ~/.npmrc
+            # echo "@argumed:registry=https://npm-proxy.fury.io/argumed/" >> ~/.npmrc
             npm publish --tag dev
 
   build-and-deploy-prod:
@@ -25,6 +26,7 @@ jobs:
           name: Publish to Gemfury (Prod)
           command: |
             echo "//npm-proxy.fury.io/argumed/:_authToken=${GEMFURY_TOKEN}" > ~/.npmrc
+            echo "@argumed:registry=https://npm-proxy.fury.io/argumed/" >> ~/.npmrc
             npm publish
   
 workflows:
