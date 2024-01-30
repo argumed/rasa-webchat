@@ -1,0 +1,47 @@
+version: 2.1
+
+jobs:
+  build-and-deploy-dev:
+    docker:
+      - image: cimg/node:16.6.0
+    steps:
+      - checkout
+      - run: npm install
+      - run: npm test
+      - run:
+          name: Publish to Gemfury (Dev)
+          command: |
+            echo "//npm.fury.io/argumed/:_authToken=${GEMFURY_TOKEN}" > ~/.npmrc
+            echo "@argumed:registry=https://npm.fury.io/argumed/" >> ~/.npmrc
+            npm publish --tag dev --registry https://npm.fury.io/argumed/ --scope=@argumed
+
+  build-and-deploy-prod:
+    docker:
+      - image: circleci/node:latest
+    steps:
+      - checkout
+      - run: npm install
+      - run: npm test
+      - run:
+          name: Publish to Gemfury (Prod)
+          command: |
+            echo "//npm.fury.io/argumed/:_authToken=${GEMFURY_TOKEN}" > ~/.npmrc
+            echo "@argumed:registry=https://npm.fury.io/argumed/" >> ~/.npmrc
+            npm publish --registry https://npm.fury.io/argumed/ --scope=@argumed
+  
+workflows:
+  version: 2
+  dev:
+    jobs:
+      - build-and-deploy-dev:
+          context: gemfury-upload
+          filters:
+            branches:
+              ignore: dev
+  prod:
+    jobs:
+      - build-and-deploy-prod:
+          context: gemfury-upload
+          filters:
+            branches:
+              only: main
