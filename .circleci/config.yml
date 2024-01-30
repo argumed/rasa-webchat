@@ -27,7 +27,7 @@ jobs:
           command: |
             echo "//npm.fury.io/argumed/:_authToken=${GEMFURY_TOKEN}" > ~/.npmrc
             echo "@argumed:registry=https://npm.fury.io/argumed/" >> ~/.npmrc
-            npm publish --registry https://npm.fury.io/argumed/ --scope=@argumed
+            npm publish --registry https://npm.fury.io/argumed/
   
 workflows:
   version: 2
@@ -37,11 +37,11 @@ workflows:
           context: gemfury-upload
           filters:
             branches:
-              ignore: dev
+              ignore: master
   prod:
     jobs:
       - build-and-deploy-prod:
           context: gemfury-upload
           filters:
             branches:
-              only: main
+              only: master
