@@ -17,7 +17,7 @@ jobs:
 
   build-and-deploy-prod:
     docker:
-      - image: circleci/node:latest
+      - image: circleci/node:16.6.0
     steps:
       - checkout
       - run: npm install
